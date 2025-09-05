@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test - Smart Education</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 2rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1rem;
+        }
+        .test-btn:hover {
+            background: #5a6fd8;
+        }
+        .result {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .function-status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        .available { background: #28a745; }
+        .missing { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Smart Education Debug Test</h1>
+    
+    <div class="test-section">
+        <h2>Function Availability Check</h2>
+        <div id="functionCheck">
+            <p>Checking if all required functions are available...</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Hero Button Tests</h2>
+        <button class="test-btn" onclick="testFunction('startLearning')">Test Start Learning</button>
+        <button class="test-btn" onclick="testFunction('exploreFeatures')">Test Explore Features</button>
+        <button class="test-btn" onclick="testFunction('openUtilityTools')">Test Study Tools</button>
+        <div id="heroResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Feature Card Tests</h2>
+        <button class="test-btn" onclick="testFeatureDetails('adaptive')">Test Adaptive Learning</button>
+        <button class="test-btn" onclick="testFeatureDetails('interactive')">Test Interactive Content</button>
+        <button class="test-btn" onclick="testFeatureDetails('flexible')">Test Flexible Schedule</button>
+        <button class="test-btn" onclick="testFeatureDetails('analytics')">Test Learning Analytics</button>
+        <div id="featureResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Course Interaction Tests</h2>
+        <button class="test-btn" onclick="testCourse('programming')">Test Programming Course</button>
+        <button class="test-btn" onclick="testCourse('ai')">Test AI Course</button>
+        <div id="courseResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Utility Tools Tests</h2>
+        <button class="test-btn" onclick="testUtilityTool('calculator')">Test Calculator</button>
+        <button class="test-btn" onclick="testUtilityTool('timetable')">Test Timetable</button>
+        <button class="test-btn" onclick="testUtilityTool('todo')">Test Todo List</button>
+        <div id="utilityResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <div id="testResults"></div>
+        <button class="test-btn" onclick="runAllTests()" style="background: #28a745;">Run All Tests</button>
+        <button class="test-btn" onclick="clearResults()" style="background: #dc3545;">Clear Results</button>
+    </div>
+
+    <!-- Include all the necessary scripts -->
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script src="notes.js"></script>
+    <script src="tests.js"></script>
+    <script src="course-auth.js"></script>
+    
+    <script>
+        const requiredFunctions = [
+            'startLearning',
+            'exploreFeatures', 
+            'openUtilityTools',
+            'showFeatureDetails',
+            'startCourse',
+            'openTool',
+            'closeTool',
+            'closeUtilityTools',
+            'showNotification'
+        ];
+        
+        function checkFunctionAvailability() {
+            const checkDiv = document.getElementById('functionCheck');
+            let html = '<h3>Function Status:</h3>';
+            
+            requiredFunctions.forEach(funcName => {
+                const isAvailable = typeof window[funcName] === 'function';
+                const statusClass = isAvailable ? 'available' : 'missing';
+                const statusText = isAvailable ? '✓' : '✗';
+                
+                html += `<div><span class="function-status ${statusClass}"></span>${funcName}: ${statusText} ${isAvailable ? 'Available' : 'Missing'}</div>`;
+            });
+            
+            checkDiv.innerHTML = html;
+        }
+        
+        function testFunction(funcName) {
+            const resultDiv = document.getElementById('heroResult');
+            try {
+                if (typeof window[funcName] === 'function') {
+                    window[funcName]();
+                    showResult(resultDiv, `✓ ${funcName}() executed successfully!`, 'success');
+                } else {
+                    showResult(resultDiv, `✗ Function ${funcName}() not found!`, 'error');
+                }
+            } catch (error) {
+                showResult(resultDiv, `✗ Error executing ${funcName}(): ${error.message}`, 'error');
+            }
+        }
+        
+        function testFeatureDetails(feature) {
+            const resultDiv = document.getElementById('featureResult');
+            try {
+                if (typeof showFeatureDetails === 'function') {
+                    showFeatureDetails(feature);
+                    showResult(resultDiv, `✓ Feature details for "${feature}" shown successfully!`, 'success');
+                } else {
+                    showResult(resultDiv, '✗ showFeatureDetails() function not found!', 'error');
+                }
+            } catch (error) {
+                showResult(resultDiv, `✗ Error showing feature details: ${error.message}`, 'error');
+            }
+        }
+        
+        function testCourse(courseId) {
+            const resultDiv = document.getElementById('courseResult');
+            try {
+                if (typeof startCourse === 'function') {
+                    startCourse(courseId);
+                    showResult(resultDiv, `✓ Course "${courseId}" started successfully!`, 'success');
+                } else {
+                    showResult(resultDiv, '✗ startCourse() function not found!', 'error');
+                }
+            } catch (error) {
+                showResult(resultDiv, `✗ Error starting course: ${error.message}`, 'error');
+            }
+        }
+        
+        function testUtilityTool(toolName) {
+            const resultDiv = document.getElementById('utilityResult');
+            try {
+                if (typeof openTool === 'function') {
+                    // First open utility tools modal, then open specific tool
+                    if (typeof openUtilityTools === 'function') {
+                        openUtilityTools();
+                        setTimeout(() => {
+                            openTool(toolName);
+                            showResult(resultDiv, `✓ Utility tool "${toolName}" opened successfully!`, 'success');
+                        }, 100);
+                    } else {
+                        showResult(resultDiv, '✗ openUtilityTools() function not found!', 'error');
+                    }
+                } else {
+                    showResult(resultDiv, '✗ openTool() function not found!', 'error');
+                }
+            } catch (error) {
+                showResult(resultDiv, `✗ Error opening utility tool: ${error.message}`, 'error');
+            }
+        }
+        
+        function showResult(element, message, type) {
+            element.className = `result ${type}`;
+            element.textContent = message;
+            element.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+        
+        function runAllTests() {
+            const results = document.getElementById('testResults');
+            results.innerHTML = '<h3>Running comprehensive tests...</h3>';
+            
+            let passCount = 0;
+            let totalTests = 0;
+            
+            // Test all hero functions
+            ['startLearning', 'exploreFeatures', 'openUtilityTools'].forEach(func => {
+                totalTests++;
+                try {
+                    if (typeof window[func] === 'function') {
+                        window[func]();
+                        passCount++;
+                        results.innerHTML += `<p>✓ ${func}() - PASS</p>`;
+                    } else {
+                        results.innerHTML += `<p>✗ ${func}() - FAIL (not found)</p>`;
+                    }
+                } catch (error) {
+                    results.innerHTML += `<p>✗ ${func}() - FAIL (${error.message})</p>`;
+                }
+            });
+            
+            // Test feature details
+            ['adaptive', 'interactive', 'flexible', 'analytics'].forEach(feature => {
+                totalTests++;
+                try {
+                    if (typeof showFeatureDetails === 'function') {
+                        showFeatureDetails(feature);
+                        passCount++;
+                        results.innerHTML += `<p>✓ Feature "${feature}" - PASS</p>`;
+                    } else {
+                        results.innerHTML += `<p>✗ Feature "${feature}" - FAIL (showFeatureDetails not found)</p>`;
+                    }
+                } catch (error) {
+                    results.innerHTML += `<p>✗ Feature "${feature}" - FAIL (${error.message})</p>`;
+                }
+            });
+            
+            // Show summary
+            const passRate = Math.round((passCount / totalTests) * 100);
+            const summaryColor = passRate >= 80 ? '#28a745' : passRate >= 60 ? '#ffc107' : '#dc3545';
+            
+            results.innerHTML += `
+                <div style="margin-top: 2rem; padding: 1rem; background: ${summaryColor}20; border-radius: 8px; border-left: 4px solid ${summaryColor};">
+                    <h4 style="color: ${summaryColor};">Test Summary</h4>
+                    <p><strong>Passed:</strong> ${passCount} / ${totalTests} (${passRate}%)</p>
+                    <p><strong>Status:</strong> ${passRate >= 80 ? '✓ All systems operational!' : passRate >= 60 ? '⚠ Some issues detected' : '✗ Multiple issues found'}</p>
+                </div>
+            `;
+        }
+        
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+        }
+        
+        // Run function availability check when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkFunctionAvailability, 500);
+        });
+    </script>
+</body>
+</html>

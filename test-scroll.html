@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Scroll Fix - Smart Education Platform</title>
+    <link rel=\"stylesheet\" href=\"styles.css\">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .test-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+        
+        .test-button {
+            background: #ffd700;
+            color: #333;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        
+        .test-button:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: left;
+        }
+        
+        .fix-list {
+            margin: 1rem 0;
+            text-align: left;
+        }
+        
+        .fix-list li {
+            margin: 0.5rem 0;
+            list-style: none;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .fix-list li:before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test Modal Scroll Fix</h1>
+        
+        <div class="info-box">
+            <h3>🔧 Issues Fixed:</h3>
+            <ul class="fix-list">
+                <li>Added proper scrolling to test content area</li>
+                <li>Fixed modal height and overflow issues</li>
+                <li>Improved mobile responsiveness</li>
+                <li>Better text visibility and readability</li>
+                <li>Touch-friendly buttons for mobile devices</li>
+                <li>Proper flex layout for modal structure</li>
+            </ul>
+        </div>
+        
+        <button class="test-button" onclick="openTestModal()">
+            📝 Open Test Modal
+        </button>
+        
+        <div class="info-box">
+            <h3>📱 Testing Instructions:</h3>
+            <p><strong>Desktop:</strong> Click the test button above and scroll through questions</p>
+            <p><strong>Mobile:</strong> Use browser dev tools (F12) to test mobile view</p>
+            <p><strong>Verify:</strong> Content should scroll properly and text should be clearly visible</p>
+        </div>
+        
+        <button class="test-button" onclick="window.location.href='index.html'">
+            🏠 Back to Main Site
+        </button>
+    </div>
+
+    <!-- Test Modal -->
+    <div id="testModal" class="utility-modal">
+        <div class="utility-modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-clipboard-check"></i> Test Scroll Demo</h2>
+                <span class="close" onclick="closeTestModal()">&times;</span>
+            </div>
+            <div class="test-container">
+                <div class="test-header">
+                    <div class="test-info">
+                        <h3 id="testTitle">Digital Learning Assessment</h3>
+                        <p id="testDescription">Testing scrolling functionality with long content</p>
+                        <div class="test-stats">
+                            <span>Questions: <span id="totalQuestions">5</span></span>
+                            <span>Time: <span id="testTimer">10:00</span></span>
+                            <span>Score: <span id="currentScore">0</span>/<span id="maxScore">50</span></span>
+                        </div>
+                    </div>
+                    <div class="test-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="testProgressFill" style="width: 20%"></div>
+                        </div>
+                        <span id="questionProgress">1 of 5</span>
+                    </div>
+                </div>
+                <div class="test-content" id="testContent">
+                    <div class="test-question">
+                        <div class="question-number">Question 1</div>
+                        <div class="question-text">
+                            This is a demonstration question with a very long text to test the scrolling functionality. 
+                            The text should wrap properly and be clearly visible on all devices. 
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        </div>
+                        <div class="question-options">
+                            <div class="option-item">
+                                <input type="radio" name="q1" value="0">
+                                <span class="option-text">This is option A with a very long text that should wrap properly and remain readable on mobile devices. The layout should adapt to different screen sizes automatically.</span>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q1" value="1">
+                                <span class="option-text">This is option B with another long text to demonstrate proper text wrapping and spacing in the test interface.</span>
+                            </div>
+                            <div class="option-item selected">
+                                <input type="radio" name="q1" value="2" checked>
+                                <span class="option-text">This is option C (selected) showing the selected state styling.</span>
+                            </div>
+                            <div class="option-item">
+                                <input type="radio" name="q1" value="3">
+                                <span class="option-text">This is option D demonstrating that all options are clearly visible and clickable.</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional content to test scrolling -->
+                        <div style="margin-top: 2rem; padding: 1rem; background: rgba(102, 126, 234, 0.1); border-radius: 8px;">
+                            <h4>📋 Additional Information:</h4>
+                            <p>This section contains additional information that makes the content longer to demonstrate the scrolling functionality. 
+                            You should be able to scroll through this content smoothly on both desktop and mobile devices.</p>
+                            
+                            <h4>🔍 What to Test:</h4>
+                            <ul>
+                                <li>Scroll up and down in this content area</li>
+                                <li>Text should remain clearly visible</li>
+                                <li>Options should be easy to select</li>
+                                <li>Modal should fit properly on screen</li>
+                                <li>Navigation buttons should be accessible</li>
+                            </ul>
+                            
+                            <h4>📱 Mobile Testing:</h4>
+                            <p>On mobile devices (or in browser dev tools mobile view):</p>
+                            <ul>
+                                <li>Content should adapt to screen size</li>
+                                <li>Text should be readable without zooming</li>
+                                <li>Touch targets should be appropriately sized</li>
+                                <li>Scrolling should work smoothly</li>
+                            </ul>
+                            
+                            <div style="height: 200px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; margin: 1rem 0;">
+                                <p>🎯 Scroll Test Area - You should see this content when scrolling!</p>
+                            </div>
+                            
+                            <p>If you can see this text by scrolling, the scroll fix is working correctly! ✅</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-controls">
+                    <button class="btn btn-secondary" id="prevBtn" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button class="btn btn-primary" id="nextBtn">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="btn btn-success" id="submitBtn" style="display: none;">
+                        <i class="fas fa-check"></i> Submit Test
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script>
+        function openTestModal() {
+            document.getElementById('testModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeTestModal() {
+            document.getElementById('testModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('testModal');
+            if (event.target === modal) {
+                closeTestModal();
+            }
+        }
+        
+        // Simple notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : '#2196F3'};
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                z-index: 10000;
+                transition: all 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('Test page loaded! Click the test button to verify the scroll fix.', 'success');
+        });
+    </script>
+</body>
+</html>

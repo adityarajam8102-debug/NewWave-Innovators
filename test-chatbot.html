@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Test Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .test-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+        .test-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .test-description {
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .test-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .test-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .console-output {
+            background: #1a1a1a;
+            color: #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">🤖 Chatbot Test Page</h1>
+        <p class="test-description">
+            This page helps debug the chatbot functionality. The chatbot button should appear in the bottom-right corner.
+            Use the buttons below to test various functions.
+        </p>
+        
+        <div class="test-buttons">
+            <button class="test-btn" onclick="testChatbotExists()">Check if Chatbot Exists</button>
+            <button class="test-btn" onclick="testElementsExist()">Check Elements</button>
+            <button class="test-btn" onclick="testManualToggle()">Manual Toggle</button>
+            <button class="test-btn" onclick="initChatbot()">Manual Init</button>
+            <button class="test-btn" onclick="clearConsole()">Clear Console</button>
+        </div>
+        
+        <div class="console-output" id="consoleOutput">
+            Console output will appear here...
+        </div>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div id="chatbot-container">
+        <!-- Chatbot Toggle Button -->
+        <button id="chatbot-toggle" class="chatbot-toggle">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-notification" id="chatbot-notification">1</span>
+        </button>
+        
+        <!-- Chatbot Window -->
+        <div id="chatbot-window" class="chatbot-window">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <div class="chatbot-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="chatbot-info">
+                        <h4>EduBot</h4>
+                        <span class="chatbot-status">Online • Ready to help</span>
+                    </div>
+                </div>
+                <div class="chatbot-actions">
+                    <button class="chatbot-minimize" id="chatbot-minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="chatbot-close" id="chatbot-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="chatbot-message bot-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <p>👋 Hi! I'm EduBot. This is a test version. Click the chat button to test!</p>
+                        </div>
+                        <span class="message-time">Just now</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-typing" id="chatbot-typing" style="display: none;">
+                <div class="typing-indicator">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="typing-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-input-area">
+                <div class="quick-questions" id="quick-questions">
+                    <button class="quick-question-btn" data-question="Test message">Test Message</button>
+                </div>
+                
+                <div class="chatbot-input-container">
+                    <input type="text" id="chatbot-input" placeholder="Type a test message..." maxlength="500">
+                    <button id="chatbot-send" class="chatbot-send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                
+                <div class="chatbot-suggestions" id="chatbot-suggestions" style="display: none;">
+                    <!-- Dynamic suggestions will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Console output functions
+        const consoleOutput = document.getElementById('consoleOutput');
+        
+        function logToConsole(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'warn' ? '⚠️' : '✅';
+            consoleOutput.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        // Override console methods to show in our output
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            logToConsole(args.join(' '), 'log');
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            logToConsole(args.join(' '), 'error');
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            logToConsole(args.join(' '), 'warn');
+        };
+
+        // Test functions
+        function testChatbotExists() {
+            if (window.chatbot) {
+                console.log('✅ Chatbot instance exists:', window.chatbot);
+                console.log('Chatbot state - isOpen:', window.chatbot.isOpen, 'isMinimized:', window.chatbot.isMinimized);
+            } else {
+                console.error('❌ Chatbot instance not found');
+            }
+        }
+
+        function testElementsExist() {
+            const elements = [
+                'chatbot-toggle',
+                'chatbot-window', 
+                'chatbot-close',
+                'chatbot-minimize',
+                'chatbot-send',
+                'chatbot-input'
+            ];
+            
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    console.log(`✅ Element found: #${id}`);
+                } else {
+                    console.error(`❌ Element missing: #${id}`);
+                }
+            });
+        }
+
+        function testManualToggle() {
+            const toggleBtn = document.getElementById('chatbot-toggle');
+            if (toggleBtn) {
+                console.log('🔄 Attempting manual toggle...');
+                toggleBtn.click();
+            } else {
+                console.error('❌ Toggle button not found for manual toggle');
+            }
+        }
+
+        function clearConsole() {
+            consoleOutput.textContent = 'Console cleared...\n';
+        }
+
+        // Initialize page
+        window.addEventListener('load', () => {
+            console.log('🚀 Test page loaded');
+            testElementsExist();
+            
+            setTimeout(() => {
+                testChatbotExists();
+            }, 2000);
+        });
+    </script>
+
+    <script src="chatbot.js"></script>
+</body>
+</html>

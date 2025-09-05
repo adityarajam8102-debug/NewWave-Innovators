@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Test - Smart Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .status-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        .btn.enroll-btn {
+            background: #4CAF50;
+        }
+        .btn.notes-btn {
+            background: #2196F3;
+        }
+        .btn.test-btn {
+            background: #FF9800;
+        }
+        .course-test {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            align-items: center;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Education - Authentication Test</h1>
+    
+    <div class="status-box">
+        <h2>Authentication Status</h2>
+        <div id="authStatus">Checking...</div>
+        <div id="userInfo"></div>
+        
+        <div id="authButtons">
+            <button class="btn" onclick="window.location.href='login.html'">Login</button>
+            <button class="btn" onclick="window.location.href='register.html'">Register</button>
+            <button class="btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <div class="status-box">
+        <h2>Course Enrollment Test</h2>
+        <p>These buttons demonstrate the enrollment flow:</p>
+        
+        <div class="course-test">
+            <strong>Programming Fundamentals:</strong>
+            <button class="btn enroll-btn" data-course-id="programming" data-course-name="Programming Fundamentals">
+                Enroll Now
+            </button>
+            <button class="btn notes-btn hidden" data-course-id="programming" data-course-name="Programming Fundamentals">
+                <i class="fas fa-sticky-note"></i> Notes
+            </button>
+            <button class="btn test-btn hidden" data-course-id="programming" data-course-name="Programming Fundamentals">
+                <i class="fas fa-clipboard-check"></i> Tests
+            </button>
+        </div>
+        
+        <div class="course-test">
+            <strong>Artificial Intelligence:</strong>
+            <button class="btn enroll-btn" data-course-id="ai" data-course-name="Artificial Intelligence">
+                Enroll Now
+            </button>
+            <button class="btn notes-btn hidden" data-course-id="ai" data-course-name="Artificial Intelligence">
+                <i class="fas fa-sticky-note"></i> Notes
+            </button>
+            <button class="btn test-btn hidden" data-course-id="ai" data-course-name="Artificial Intelligence">
+                <i class="fas fa-clipboard-check"></i> Tests
+            </button>
+        </div>
+    </div>
+    
+    <div class="status-box">
+        <h2>Test Instructions</h2>
+        <ol>
+            <li><strong>Authentication:</strong> Click "Enroll Now" on any course above</li>
+            <li><strong>Login Flow:</strong> If not logged in, you'll be redirected to login page</li>
+            <li><strong>Auto-Enrollment:</strong> After login, you'll be returned here and prompted to enroll</li>
+            <li><strong>Feature Unlock:</strong> After enrollment, Notes and Tests buttons will appear</li>
+            <li><strong>Notes System:</strong> Click Notes to access full note-taking functionality with:
+                <ul>
+                    <li>Create, edit, delete, and pin notes</li>
+                    <li>Search and filter by category</li>
+                    <li>Hashtag support (#tags)</li>
+                    <li>Character count and timestamps</li>
+                </ul>
+            </li>
+            <li><strong>Tests System:</strong> Click Tests to access quiz functionality with:
+                <ul>
+                    <li>Multiple choice and true/false questions</li>
+                    <li>Timed tests with progress tracking</li>
+                    <li>Detailed results and explanations</li>
+                    <li>Retake capability and score history</li>
+                </ul>
+            </li>
+        </ol>
+        <div style="background: #e8f5e8; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+            <h4 style="margin: 0 0 0.5rem 0; color: #2e7d32;">✨ New Features Added!</h4>
+            <p style="margin: 0; color: #2e7d32;">Both Notes and Tests are now fully functional with comprehensive features including data persistence, search, analytics, and mobile responsiveness!</p>
+        </div>
+    </div>
+    
+    <script src="auth.js"></script>
+    <script src="notes.js"></script>
+    <script src="tests.js"></script>
+    <script src="course-auth.js"></script>
+    
+    <script>
+        // Update authentication status display
+        function updateAuthDisplay() {
+            const authStatus = document.getElementById('authStatus');
+            const userInfo = document.getElementById('userInfo');
+            const authButtons = document.getElementById('authButtons');
+            
+            if (window.authModule && window.authModule.isAuthenticated()) {
+                const user = window.authModule.getCurrentUser();
+                authStatus.innerHTML = '<span style="color: green;">✓ Logged In</span>';
+                userInfo.innerHTML = `<p><strong>User:</strong> ${user.firstName} ${user.lastName} (${user.email})</p>`;
+                authButtons.innerHTML = '<button class="btn" onclick="logout()">Logout</button>';
+            } else {
+                authStatus.innerHTML = '<span style="color: red;">✗ Not Logged In</span>';
+                userInfo.innerHTML = '';
+                authButtons.innerHTML = `
+                    <button class="btn" onclick="window.location.href='login.html'">Login</button>
+                    <button class="btn" onclick="window.location.href='register.html'">Register</button>
+                `;
+            }
+        }
+        
+        // Update display every 2 seconds
+        setInterval(updateAuthDisplay, 2000);
+        
+        // Initial update
+        setTimeout(updateAuthDisplay, 1000);
+        
+        // Manual refresh function
+        function refreshStatus() {
+            updateAuthDisplay();
+        }
+        
+        // Add refresh button
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusBox = document.querySelector('.status-box');
+            const refreshBtn = document.createElement('button');
+            refreshBtn.className = 'btn';
+            refreshBtn.textContent = 'Refresh Status';
+            refreshBtn.onclick = refreshStatus;
+            statusBox.appendChild(refreshBtn);
+        });
+    </script>
+</body>
+</html>
