@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Smart Education - Register">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#667eea">
+    <title>Register - Smart Education Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="auth-page">
+    <!-- Background Animation -->
+    <div class="auth-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="auth-header">
+        <div class="auth-nav">
+            <div class="nav-brand">
+                <a href="index.html">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Smart Education</span>
+                </a>
+            </div>
+            <div class="auth-links">
+                <a href="index.html" class="auth-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="auth-main">
+        <div class="auth-container">
+            <!-- Register Form -->
+            <div class="auth-card register-card">
+                <div class="auth-card-header">
+                    <div class="auth-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h1>Join Smart Education!</h1>
+                    <p>Create your account to start learning</p>
+                </div>
+
+                <div class="auth-card-body">
+                    <form id="registerForm" class="auth-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <div class="input-group">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="firstName" name="firstName" required 
+                                           placeholder="First name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <div class="input-group">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="lastName" name="lastName" required 
+                                           placeholder="Last name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" required 
+                                       placeholder="Enter your email">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" required 
+                                       placeholder="Create a password">
+                                <button type="button" class="password-toggle" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill"></div>
+                                </div>
+                                <span class="strength-text">Password strength</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required 
+                                       placeholder="Confirm your password">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="institution">Institution (Optional)</label>
+                                <div class="input-group">
+                                    <i class="fas fa-university"></i>
+                                    <input type="text" id="institution" name="institution" 
+                                           placeholder="Your institution">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="year">Year (Optional)</label>
+                                <div class="input-group">
+                                    <i class="fas fa-calendar"></i>
+                                    <select id="year" name="year">
+                                        <option value="">Select year</option>
+                                        <option value="1">1st Year</option>
+                                        <option value="2">2nd Year</option>
+                                        <option value="3">3rd Year</option>
+                                        <option value="4">4th Year</option>
+                                        <option value="5">5th Year</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#" class="terms-link">Terms of Service</a> and 
+                                <a href="#" class="terms-link">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-user-plus"></i>
+                            Create Account
+                        </button>
+                    </form>
+
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button class="btn btn-social btn-google" onclick="registerWithGoogle()">
+                            <i class="fab fa-google"></i>
+                            Continue with Google
+                        </button>
+                        <button class="btn btn-social btn-github" onclick="registerWithGitHub()">
+                            <i class="fab fa-github"></i>
+                            Continue with GitHub
+                        </button>
+                    </div>
+
+                    <div class="auth-footer">
+                        <p>Already have an account? 
+                            <a href="login.html" class="auth-link-primary">Sign in here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success/Error Messages -->
+            <div id="authMessage" class="auth-message">
+                <div class="message-content">
+                    <i class="message-icon"></i>
+                    <span class="message-text"></span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Creating your account...</p>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

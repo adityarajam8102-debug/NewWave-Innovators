@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Test - Smart Education Platform</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .test-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn {
+            background: #ffd700;
+            color: #333;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #ffed4e;
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .logged-in {
+            background: rgba(76, 175, 80, 0.3);
+        }
+        
+        .logged-out {
+            background: rgba(244, 67, 54, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Logout Functionality Test</h1>
+        
+        <div id="authStatus" class="status">
+            Checking authentication status...
+        </div>
+        
+        <div id="userInfo" class="status" style="display: none;">
+            <strong>Current User:</strong>
+            <div id="userName"></div>
+            <div id="userEmail"></div>
+        </div>
+        
+        <div class="test-controls">
+            <button class="btn" onclick="simulateLogin()">Simulate Login</button>
+            <button class="btn" onclick="testLogout()">Test Logout</button>
+            <button class="btn" onclick="checkAuth()">Check Auth Status</button>
+            <button class="btn" onclick="clearStorage()">Clear All Storage</button>
+        </div>
+        
+        <div class="test-actions">
+            <button class="btn" onclick="window.location.href='index.html'">Go to Main Page</button>
+            <button class="btn" onclick="window.location.href='login.html'">Go to Login Page</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Check authentication status on load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+        });
+        
+        function simulateLogin() {
+            // Create test user
+            const testUser = {
+                id: 'test_' + Date.now(),
+                email: 'test@logout.com',
+                firstName: 'Test',
+                lastName: 'User',
+                institution: 'Test Institution',
+                year: '3'
+            };
+            
+            // Create auth token
+            const token = 'test_token_' + Date.now();
+            
+            // Store in localStorage
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('currentUser', JSON.stringify(testUser));
+            
+            showNotification('Test user logged in!', 'success');
+            checkAuth();
+        }
+        
+        function testLogout() {
+            if (typeof window.logout === 'function') {
+                console.log('Calling window.logout()');
+                window.logout();
+            } else {
+                showNotification('Logout function not found!', 'error');
+                console.error('window.logout is not defined');
+                
+                // Manual logout as fallback
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('currentUser');
+                showNotification('Manual logout completed', 'warning');
+                checkAuth();
+            }
+        }
+        
+        function checkAuth() {
+            const token = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('currentUser');
+            const statusDiv = document.getElementById('authStatus');
+            const userInfoDiv = document.getElementById('userInfo');
+            const userNameDiv = document.getElementById('userName');
+            const userEmailDiv = document.getElementById('userEmail');
+            
+            if (token && userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    statusDiv.textContent = 'User is LOGGED IN';
+                    statusDiv.className = 'status logged-in';
+                    
+                    userInfoDiv.style.display = 'block';
+                    userNameDiv.textContent = `${user.firstName} ${user.lastName}`;
+                    userEmailDiv.textContent = user.email;
+                } catch (error) {
+                    statusDiv.textContent = 'Invalid user data - LOGGED OUT';
+                    statusDiv.className = 'status logged-out';
+                    userInfoDiv.style.display = 'none';
+                }
+            } else {
+                statusDiv.textContent = 'User is LOGGED OUT';
+                statusDiv.className = 'status logged-out';
+                userInfoDiv.style.display = 'none';
+            }
+            
+            // Check if logout function exists
+            const logoutStatus = typeof window.logout === 'function' ? 'Available' : 'NOT FOUND';
+            console.log(`Logout function: ${logoutStatus}`);
+        }
+        
+        function clearStorage() {
+            localStorage.clear();
+            showNotification('All localStorage cleared!', 'warning');
+            checkAuth();
+        }
+        
+        // Simple notification function for this test
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#ff9800'};
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                z-index: 10000;
+                transition: all 0.3s ease;
+                transform: translateX(400px);
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Education - Notes & Tests Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .feature-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .demo-course-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .demo-course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .course-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+        
+        .course-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+        
+        .course-info p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .demo-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        
+        .demo-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .demo-btn-notes {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .demo-btn-notes:hover {
+            background: #1976D2;
+            transform: translateY(-1px);
+        }
+        
+        .demo-btn-tests {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .demo-btn-tests:hover {
+            background: #F57C00;
+            transform: translateY(-1px);
+        }
+        
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-icon {
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+        
+        .feature-text {
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .demo-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #f8fafc, #e3f2fd);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+        
+        .alert-info {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+            margin: 1rem 0;
+        }
+        
+        .alert-success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1><i class="fas fa-graduation-cap"></i> Smart Education Platform</h1>
+            <h2>Notes & Tests Feature Demo</h2>
+            <p>Experience the complete learning management system with advanced note-taking and testing capabilities</p>
+        </div>
+        
+        <div class="feature-section">
+            <h2><i class="fas fa-sticky-note"></i> Notes System Features</h2>
+            <p>A comprehensive note-taking system that helps students organize their learning materials effectively.</p>
+            
+            <div class="features-list">
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-plus"></i>
+                    <span class="feature-text">Create & Edit Notes</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-search"></i>
+                    <span class="feature-text">Search & Filter</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-thumbtack"></i>
+                    <span class="feature-text">Pin Important Notes</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-hashtag"></i>
+                    <span class="feature-text">Hashtag Organization</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-tags"></i>
+                    <span class="feature-text">Category System</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-clock"></i>
+                    <span class="feature-text">Timestamps & History</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-chart-bar"></i>
+                    <span class="feature-text">Statistics & Analytics</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-mobile-alt"></i>
+                    <span class="feature-text">Mobile Responsive</span>
+                </div>
+            </div>
+            
+            <div class="alert-info">
+                <strong><i class="fas fa-info-circle"></i> Pro Tips:</strong>
+                Use #hashtags in your notes for better organization, pin frequently accessed notes, and use categories like "lecture", "assignment", "exam" for better filtering.
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h2><i class="fas fa-clipboard-check"></i> Tests & Quizzes Features</h2>
+            <p>Interactive testing system with comprehensive analytics and detailed feedback mechanisms.</p>
+            
+            <div class="features-list">
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-question-circle"></i>
+                    <span class="feature-text">Multiple Question Types</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-stopwatch"></i>
+                    <span class="feature-text">Timed Assessments</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-chart-line"></i>
+                    <span class="feature-text">Progress Tracking</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-redo"></i>
+                    <span class="feature-text">Retake Capability</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-check-circle"></i>
+                    <span class="feature-text">Instant Results</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-lightbulb"></i>
+                    <span class="feature-text">Detailed Explanations</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-history"></i>
+                    <span class="feature-text">Score History</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-medal"></i>
+                    <span class="feature-text">Achievement System</span>
+                </div>
+            </div>
+            
+            <div class="alert-success">
+                <strong><i class="fas fa-star"></i> Achievement Unlocked:</strong>
+                Complete tests with 70% or higher to pass. View detailed question-by-question analysis to improve your understanding.
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h2><i class="fas fa-rocket"></i> Try It Out!</h2>
+            <p>Click the buttons below to experience the full functionality of our Notes and Tests systems.</p>
+            
+            <div class="feature-buttons">
+                <div class="demo-course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="course-info">
+                        <h3>Programming Fundamentals</h3>
+                        <p>Comprehensive programming course with interactive examples and practical exercises.</p>
+                    </div>
+                    <div class="demo-actions">
+                        <button class="demo-btn demo-btn-notes" data-course-id="programming" data-course-name="Programming Fundamentals" onclick="openDemoNotes(this)">
+                            <i class="fas fa-sticky-note"></i> Notes
+                        </button>
+                        <button class="demo-btn demo-btn-tests" data-course-id="programming" data-course-name="Programming Fundamentals" onclick="openDemoTests(this)">
+                            <i class="fas fa-clipboard-check"></i> Tests
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="demo-course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="course-info">
+                        <h3>Artificial Intelligence</h3>
+                        <p>Advanced AI concepts with machine learning projects and practical implementations.</p>
+                    </div>
+                    <div class="demo-actions">
+                        <button class="demo-btn demo-btn-notes" data-course-id="ai" data-course-name="Artificial Intelligence" onclick="openDemoNotes(this)">
+                            <i class="fas fa-sticky-note"></i> Notes
+                        </button>
+                        <button class="demo-btn demo-btn-tests" data-course-id="ai" data-course-name="Artificial Intelligence" onclick="openDemoTests(this)">
+                            <i class="fas fa-clipboard-check"></i> Tests
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="demo-course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="course-info">
+                        <h3>Data Science</h3>
+                        <p>Master data analysis, visualization, and statistical modeling techniques.</p>
+                    </div>
+                    <div class="demo-actions">
+                        <button class="demo-btn demo-btn-notes" data-course-id="data-science" data-course-name="Data Science" onclick="openDemoNotes(this)">
+                            <i class="fas fa-sticky-note"></i> Notes
+                        </button>
+                        <button class="demo-btn demo-btn-tests" data-course-id="data-science" data-course-name="Data Science" onclick="openDemoTests(this)">
+                            <i class="fas fa-clipboard-check"></i> Tests
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-stats">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalNotesDemo">0</span>
+                    <span class="stat-label">Total Notes Created</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="totalTestsDemo">12</span>
+                    <span class="stat-label">Available Tests</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="completedTestsDemo">0</span>
+                    <span class="stat-label">Tests Completed</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="avgScoreDemo">0%</span>
+                    <span class="stat-label">Average Score</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-section">
+            <h2><i class="fas fa-info-circle"></i> Technical Features</h2>
+            <p>Built with modern web technologies for optimal performance and user experience.</p>
+            
+            <div class="features-list">
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-save"></i>
+                    <span class="feature-text">Local Storage Persistence</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-sync"></i>
+                    <span class="feature-text">Real-time Updates</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-shield-alt"></i>
+                    <span class="feature-text">Data Validation</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-compress-alt"></i>
+                    <span class="feature-text">Responsive Design</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-tachometer-alt"></i>
+                    <span class="feature-text">Performance Optimized</span>
+                </div>
+                <div class="feature-item">
+                    <i class="feature-icon fas fa-universal-access"></i>
+                    <span class="feature-text">Accessibility Friendly</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-section" style="text-align: center;">
+            <h2><i class="fas fa-home"></i> Ready to Get Started?</h2>
+            <p>Go back to the main site to experience the complete Smart Education Platform with authentication and course enrollment.</p>
+            <a href="index.html" class="demo-btn" style="background: #667eea; color: white; padding: 1rem 2rem; font-size: 1.1rem;">
+                <i class="fas fa-arrow-left"></i> Back to Main Site
+            </a>
+        </div>
+    </div>
+    
+    <script src="notes.js"></script>
+    <script src="tests.js"></script>
+    
+    <script>
+        // Demo functions to open Notes and Tests
+        function openDemoNotes(button) {
+            const courseId = button.getAttribute('data-course-id');
+            const courseName = button.getAttribute('data-course-name');
+            
+            if (window.notesModule) {
+                window.notesModule.openNotesModal(courseId, courseName);
+                updateDemoStats();
+            }
+        }
+        
+        function openDemoTests(button) {
+            const courseId = button.getAttribute('data-course-id');
+            const courseName = button.getAttribute('data-course-name');
+            
+            if (window.testsModule) {
+                window.testsModule.openTestModal(courseId, courseName);
+                updateDemoStats();
+            }
+        }
+        
+        // Update demo statistics
+        function updateDemoStats() {
+            setTimeout(() => {
+                if (window.notesManager) {
+                    let totalNotes = 0;
+                    const courses = ['programming', 'ai', 'data-science', 'web-development', 'ui-ux-design'];
+                    
+                    courses.forEach(courseId => {
+                        const courseNotes = window.notesManager.getCourseNotes(courseId);
+                        totalNotes += courseNotes.length;
+                    });
+                    
+                    document.getElementById('totalNotesDemo').textContent = totalNotes;
+                }
+                
+                if (window.testsManager) {
+                    let totalCompleted = 0;
+                    let totalScore = 0;
+                    let totalTests = 0;
+                    
+                    const courses = ['programming', 'ai', 'data-science'];
+                    
+                    courses.forEach(courseId => {
+                        const results = window.testsManager.getCourseResults(courseId);
+                        totalCompleted += results.length;
+                        
+                        if (results.length > 0) {
+                            const courseScore = results.reduce((sum, r) => sum + r.score, 0) / results.length;
+                            totalScore += courseScore;
+                            totalTests++;
+                        }
+                    });
+                    
+                    document.getElementById('completedTestsDemo').textContent = totalCompleted;
+                    document.getElementById('avgScoreDemo').textContent = 
+                        totalTests > 0 ? Math.round(totalScore / totalTests) + '%' : '0%';
+                }
+            }, 100);
+        }
+        
+        // Update stats periodically
+        setInterval(updateDemoStats, 5000);
+        
+        // Initial stats update
+        setTimeout(updateDemoStats, 1000);
+    </script>
+</body>
+</html>
